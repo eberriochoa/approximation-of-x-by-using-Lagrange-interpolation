@@ -1,0 +1,53 @@
+(* These sequence of Mathematica commands obtain a general view  of \
+the interpolation process of F[z] on the nodal system constituted by \
+the 2n-th roots of 1.                               *)
+
+
+
+Clear[F, n]
+
+F[z_] = Abs[(z + 1/z)/2]
+
+
+n = 50
+
+
+
+
+
+arcosalpha = Table[N[k 2 Pi /(2 n)], {k, 0, 2 n - 1}];
+arcosalphamitadnmenos1 = 
+  N[( 2 n/2 - 1) arcosalpha - 
+    2 Pi * IntegerPart[(2 n/2 - 1) arcosalpha/(2 Pi)], 50];
+
+
+
+alphas = N[E^(I arcosalpha), 50];
+alphasmitadnmenos1 = N[E^(I arcosalphamitadnmenos1), 50];
+
+
+wj = (alphasmitadnmenos1)^(-1);
+
+
+
+valoresfalpha = F[alphas];
+
+
+
+interpolador[z_] = N[\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(wj[\([\)\(k\)\(]\)] valoresfalpha[\([\)\(k\)\(]\)]\), \
+\(z - alphas[\([\)\(k\)\(]\)]\)])\)\)/\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(\(\ \)\(wj[\([\)\(k\)\(]\)]\)\), \(z - 
+       alphas[\([\)\(k\)\(]\)]\)])\)\), 50];
+
+eta[a_] = \!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(l = 
+     0\), \(\[Infinity]\)]\(\((\(-1\))\)^l/\((l + a)\)\)\);
+P2[d_] = d eta[1 + d];
+
+error[d_] = 
+  Piecewise[{{-4 Sin[Pi d] (P2[d] - 1/2 ), 
+     d >= 0}, {4 Sin[Pi d] (P2[-d] - 1/2 ), d < 0}}];
+
