@@ -5,4 +5,4 @@ This file is related with the piece of work :
 
 It contains two Mathematic sets of commands (used to produce some of the graphics) and different figures in pdf format.
 
-The material can be used and reproduced with any limitation.
+The material can be used and reproduced without limitation.
